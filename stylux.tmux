@@ -11,10 +11,10 @@ main () {
   tmux set-option -g status-right ""
 
   for status in $(getTmuxOption "@left-status"); do
-    tmux set-option -agq status-left "$(trim $status) $leftSeperator "
+    tmux set-option -agq status-left " $(trim $status)$leftSeperator"
   done
   for status in $(getTmuxOption "@right-status"); do
-    tmux set-option -agq status-right "$rightSeperator $(trim $status) "
+    tmux set-option -agq status-right " $rightSeperator$(trim $status)"
   done
 }
 
