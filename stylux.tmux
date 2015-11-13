@@ -4,7 +4,6 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source "$CURRENT_DIR/scripts/helpers.sh"
 source "$CURRENT_DIR/scripts/settings.sh"
-source "$CURRENT_DIR/scripts/defaults.sh"
 
 main () {
   IFS=\|
