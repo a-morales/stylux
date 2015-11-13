@@ -2,10 +2,8 @@
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+source "$CURRENT_DIR/scripts/helpers.sh"
 source "$CURRENT_DIR/scripts/settings.sh"
-
-left_status=$(tmux show-option -gqv "@left-status")
-right_status=$(tmux show-option -gqv "@right-status")
 
 trim() {
   local var="$*"
@@ -18,12 +16,14 @@ main () {
   IFS=\|
   tmux set-option -g status-left ""
   tmux set-option -g status-right ""
-  for status in $left_status; do
-    tmux set-option -agq status-left "$(trim $status) $primaryLeft "
+
+  for status in $(getTmuxOption "@left-status"); do
+    tmux set-option -agq status-left "$(trim $status) $leftSeperator "
   done
-  for status in $right_status; do
-    tmux set-option -agq status-right "$primaryRight $(trim $status) "
+  for status in $(getTmuxOption "@right-status"); do
+    tmux set-option -agq status-right "$rightSeperator $(trim $status) "
   done
 }
 
+getSeperators
 main
