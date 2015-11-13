@@ -19,5 +19,6 @@ main () {
   done
 }
 
+setDefaults
 getSeperators
 main
