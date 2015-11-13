@@ -4,13 +4,7 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 source "$CURRENT_DIR/scripts/helpers.sh"
 source "$CURRENT_DIR/scripts/settings.sh"
-
-trim() {
-  local var="$*"
-  var="${var#"${var%%[![:space:]]*}"}"   # remove leading whitespace characters
-  var="${var%"${var##*[![:space:]]}"}"   # remove trailing whitespace characters
-  echo -n "$var"
-}
+source "$CURRENT_DIR/scripts/defaults.sh"
 
 main () {
   IFS=\|
