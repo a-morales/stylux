@@ -22,6 +22,6 @@ Installation
 
   - Add the script to the bottom of `.tmux.conf`:
   ```
-  run-shel ~/installation/path/stylux.tmux
+  run-shell ~/installation/path/stylux.tmux
   ```
   - Reload Tmux environment
