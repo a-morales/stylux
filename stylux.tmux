@@ -11,11 +11,13 @@ main () {
   tmux set-option -g status-right ""
 
   leftStatus=$(getSections "$(getTmuxOption "@left-status")")
+  leftLength=$(getSectionsLength "$(getTmuxOption "@left-status")")
   for status in $leftStatus; do
     tmux set-option -agq status-left " $(trim "$status")$leftSeperator"
   done
 
   rightStatus=$(getSections "$(getTmuxOption "@right-status")")
+  rightLength=$(getSectionsLength "$(getTmuxOption "@right-status")")
   for status in $rightStatus; do
     tmux set-option -agq status-right " $rightSeperator$(trim "$status")"
   done
