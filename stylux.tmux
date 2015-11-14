@@ -10,19 +10,20 @@ main () {
   tmux set-option -g status-left ""
   tmux set-option -g status-right ""
 
-  leftStatus=$(getSections "$(getTmuxOption "@left-status")")
-  leftLength=$(getSectionsLength "$(getTmuxOption "@left-status")")
+  leftStatus=$(getSections "$(getOption "@left-status")")
+  leftLength=$(getSectionsLength "$(getOption "@left-status")")
   for status in $leftStatus; do
     tmux set-option -agq status-left " $(trim "$status")$leftSeperator"
   done
 
-  rightStatus=$(getSections "$(getTmuxOption "@right-status")")
-  rightLength=$(getSectionsLength "$(getTmuxOption "@right-status")")
+  rightStatus=$(getSections "$(getOption "@right-status")")
+  rightLength=$(getSectionsLength "$(getOption "@right-status")")
   for status in $rightStatus; do
     tmux set-option -agq status-right " $rightSeperator$(trim "$status")"
   done
 }
 
+setColors
 setDefaults
 getSeperators
 main

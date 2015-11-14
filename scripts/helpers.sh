@@ -1,11 +1,23 @@
 #!/usr/bin/env bash
 
-getTmuxOption() {
-  echo "$(tmux show-option -gqv "$1")"
+getOption() { echo "$(tmux show-option -gqv "$1")"; }
+
+getWindowOption() { echo "$(tmux show-option -gwqv "$1")"; }
+
+setOption() {
+  if [ -z "$(getOption $1)" ]; then
+    tmux set-option -gq $1 "$2"
+  fi
+}
+
+setWindowOption() {
+  if [ -z "$(getWindowOption $1)" ]; then
+    tmux set-window-option -gq $1 "$2"
+  fi
 }
 
 getTmuxOptionOrElse() {
-  local optionValue="$(tmux show-option -gqv $1)"
+  local optionValue="$(getOption $1)"
   if [ -z "$optionValue" ]; then
     echo "$2"
   else
@@ -22,9 +34,12 @@ trim() {
 
 getSections() {
   IFS="|" read -r -a result <<< "$1"
-  for i in "${result[@]}"; do
-    echo "$i"
-  done
+  for i in "${result[@]}"; do echo "$i"; done
+}
+
+getSubSections() {
+  IFS="," read -r -a result <<< "$1"
+  for i in "${result[@]}"; do echo "$i"; done
 }
 
 getSectionsLength() {
