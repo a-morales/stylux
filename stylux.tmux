@@ -6,15 +6,18 @@ source "$CURRENT_DIR/scripts/helpers.sh"
 source "$CURRENT_DIR/scripts/settings.sh"
 
 main () {
-  IFS=\|
+  IFS=$'\n'
   tmux set-option -g status-left ""
   tmux set-option -g status-right ""
 
-  for status in $(getTmuxOption "@left-status"); do
-    tmux set-option -agq status-left " $(trim $status)$leftSeperator"
+  leftStatus=$(getSections "$(getTmuxOption "@left-status")")
+  for status in $leftStatus; do
+    tmux set-option -agq status-left " $(trim "$status")$leftSeperator"
   done
-  for status in $(getTmuxOption "@right-status"); do
-    tmux set-option -agq status-right " $rightSeperator$(trim $status)"
+
+  rightStatus=$(getSections "$(getTmuxOption "@right-status")")
+  for status in $rightStatus; do
+    tmux set-option -agq status-right " $rightSeperator$(trim "$status")"
   done
 }
 

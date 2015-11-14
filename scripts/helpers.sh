@@ -20,7 +20,14 @@ trim() {
   echo -n "$var"
 }
 
-splitString() {
-  IFS="$1" read -ra result <<< "$2"
-  echo "$result"
+getSections() {
+  IFS="|" read -r -a result <<< "$1"
+  for i in "${result[@]}"; do
+    echo "$i"
+  done
+}
+
+getSectionsLength() {
+  IFS="|" read -r -a result <<< "$1"
+  echo "${#result[@]}"
 }
