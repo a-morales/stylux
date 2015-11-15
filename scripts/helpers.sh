@@ -5,18 +5,19 @@ getOption() { echo "$(tmux show-option -gqv "$1")"; }
 getWindowOption() { echo "$(tmux show-option -gwqv "$1")"; }
 
 setOption() {
-  if [ -z "$(getOption $1)" ]; then
-    tmux set-option -gq $1 "$2"
+  if [ -z "$(getOption $1)" ] || [ "$(getOption $1)" == "default" ]; then
+    tmux set-option -gq $1 $2
   fi
 }
 
 setWindowOption() {
-  if [ -z "$(getWindowOption $1)" ]; then
-    tmux set-window-option -gq $1 "$2"
+  windowOption=$(getWindowOption $1)
+  if [ -z "$windowOption" ] || [ "$windowOption" == "default" ]; then
+    tmux set-window-option -gq $1 $2
   fi
 }
 
-getTmuxOptionOrElse() {
+getOptionOrElse() {
   local optionValue="$(getOption $1)"
   if [ -z "$optionValue" ]; then
     echo "$2"
