@@ -23,7 +23,6 @@ main () {
   done
 }
 
-setColors
+initialize
 setDefaults
-getSeperators
 main

@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-getSeperators() {
+initialize() {
   leftSeperator=$(getOptionOrElse "@left-seperator" "")
   rightSeperator=$(getOptionOrElse "@right-seperator" "")
   leftSubseperator=$(getOptionOrElse "@left-subseperator" "")
   rightSubseperator=$(getOptionOrElse "@right-subseperator" "")
-}
 
-setColors() {
   bgColor=$(getOptionOrElse "@bg-color" 'black')
   fgColor=$(getOptionOrElse "@fg-color" 'white')
   primaryColor=$(getOptionOrElse "@primary-color" 'green')
