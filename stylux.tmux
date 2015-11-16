@@ -10,16 +10,16 @@ main () {
   tmux set-option -g status-left ""
   tmux set-option -g status-right ""
 
-  leftStatus=$(getSections "$(getOption "@left-status")")
-  sectionLength=$(getSectionsLength "$(getOption "@left-status")")
+  leftStatus=$(splitStringOn '|' "$(getOption "@left-status")")
+  sectionLength=$(splitStringLength '|' "$(getOption "@left-status")")
   local currentSection=1
   for status in $leftStatus; do
-    local sectionLength=$(getSubsectionsLength "$status")
+    local sectionLength=$(splitStringLength ',' "$status")
     local currentSubsection=1
     setColor 'status-left' $currentSection
 
-    for subStatus in $(getSubsections "$status"); do
-      appendOption 'status-left' " $(trim "$subStatus") "
+    for subStatus in $(splitStringOn ',' "$status"); do
+      appendOption 'status-left' " $(trimString "$subStatus") "
       if [ $currentSubsection != $sectionLength ]; then
         appendOption 'status-left' "$leftSubseperator"
         currentSubsection=$((currentSubsection + 1))
@@ -34,21 +34,20 @@ main () {
 
   done
 
-  rightStatus=$(getSections "$(getOption "@right-status")")
-  currentSection=$(getSectionsLength "$(getOption "@right-status")")
+  rightStatus=$(splitStringOn '|' "$(getOption "@right-status")")
+  currentSection=$(splitStringLength '|' "$(getOption "@right-status")")
   for status in $rightStatus; do
-    local currentSubsection=$(getSubsectionsLength "$status")
+    local currentSubsection=$(splitStringLength ',' "$status")
     setColor 'status-right' $currentSection
 
-    for subStatus in $(getSubsections "$status"); do
-      appendOption 'status-right' " $(trim "$subStatus") "
+    for subStatus in $(splitStringOn ',' "$status"); do
+      appendOption 'status-right' " $(trimString "$subStatus") "
       if [ $currentSubsection != 1 ]; then
         appendOption 'status-right' "$rightSubseperator"
         currentSubsection=$((currentSubsection - 1))
       fi
     done
 
-    echo $currentSection $status
     if [ $currentSection > 1 ]; then
       appendOption 'status-right' "$rightSeperator"
       currentSection=$((currentSection - 1))

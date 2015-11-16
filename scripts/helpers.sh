@@ -30,29 +30,19 @@ getOptionOrElse() {
   fi
 }
 
-trim() {
+trimString() {
   local var="$*"
   var="${var#"${var%%[![:space:]]*}"}"   # remove leading whitespace characters
   var="${var%"${var##*[![:space:]]}"}"   # remove trailing whitespace characters
   echo -n "$var"
 }
 
-getSections() {
-  IFS="|" read -r -a result <<< "$1"
+splitStringOn() {
+  IFS="${1}" read -r -a result <<< "$2"
   for i in "${result[@]}"; do echo "$i"; done
 }
 
-getSubsections() {
-  IFS="," read -r -a result <<< "$1"
-  for i in "${result[@]}"; do echo "$i"; done
-}
-
-getSectionsLength() {
-  IFS="|" read -r -a result <<< "$1"
-  echo "${#result[@]}"
-}
-
-getSubsectionsLength() {
-  IFS="," read -r -a result <<< "$1"
+splitStringLength() {
+  IFS="${1}" read -r -a result <<< "$2"
   echo "${#result[@]}"
 }
