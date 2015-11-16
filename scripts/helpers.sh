@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-getOption() { echo "$(tmux show-option -gqv "$1")"; }
+getOption() { echo "$(tmux show-option -gqv $1)"; }
 
-getWindowOption() { echo "$(tmux show-option -gwqv "$1")"; }
+getWindowOption() { echo "$(tmux show-option -gwqv $1)"; }
 
 appendOption() {
   tmux set-option -agq $1 $2
 }
 
 setOption() {
-  if [ -z "$(getOption $1)" ] || [ "$(getOption $1)" == "default" ]; then
+  if [ -z "$(getOption $1)" ] || [ "$(getOption $1)" == "default" ] || [ "$3" == true ]; then
     tmux set-option -gq $1 $2
   fi
 }
@@ -47,18 +47,26 @@ splitStringLength() {
   echo "${#result[@]}"
 }
 
+getColorCombination() {
+  echo "#[fg=$(getFgColor $1),bg=$(getBgColor $1)]"
+}
+
+getColorBoundary() {
+  echo "#[fg=$(getBgColor $1),bg=$(getBgColor $2)]"
+}
+
 getBgColor() {
-  IFS="," read -r -a colors <<< "$1"
-  colorSet=${colors[$2]}
+  IFS="," read -r -a colors <<< "$colorList"
+  colorSet=${colors[$1]}
   if [ -z $colorSet ]; then
-    colorSet="$darkColor"
+    colorSet="$bgColor"
   fi
   echo $(trimString "$colorSet")
 }
 
 getFgColor() {
-  IFS="," read -r -a colors <<< "$1"
-  if [ -z ${colors[$2]} ]; then
+  IFS="," read -r -a colors <<< "$colorList"
+  if [ -z ${colors[$1]} ]; then
     echo "$fgColor"
   else
     echo "$bgColor"

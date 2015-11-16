@@ -11,8 +11,7 @@ initialize() {
   primaryColor=$(getOptionOrElse "@primary-color" 'green')
   secondaryColor=$(getOptionOrElse "@secondary-color" 'red')
 
-  leftColors=$(getOptionOrElse "@left-colors", 'blue, green')
-  rightColors=$(getOptionOrElse "@right-colors", "$leftColors")
+  colorList=$(getOptionOrElse "@left-colors", 'blue, green')
 }
 
 setDefaults() {
@@ -35,6 +34,7 @@ setColor() {
   else
     appendOption "$1" "#[fg=$fgColor,bg=$bgColor]"
   fi
+  echo "#[fg=$1,bg=$2]"
 }
 
 setColorBoundary() {
@@ -48,7 +48,6 @@ setColorBoundary() {
 }
 
 setRightColorBoundary() {
-  echo $2
   if [ $2 == 1 ]; then
     appendOption "$1" "#[fg=$primaryColor,bg=$primaryColor]"
   elif [ $2 == 2 ]; then
