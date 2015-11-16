@@ -6,32 +6,34 @@ initialize() {
   leftSubseperator=$(getOptionOrElse "@left-subseperator" "")
   rightSubseperator=$(getOptionOrElse "@right-subseperator" "")
 
-  darkColor=$(getOptionOrElse "@dark-color" 'black')
-  lightColor=$(getOptionOrElse "@light-color" 'white')
+  bgColor=$(getOptionOrElse "@bg-color" 'black')
+  fgColor=$(getOptionOrElse "@fg-color" 'white')
   primaryColor=$(getOptionOrElse "@primary-color" 'green')
-  secondaryColor=$(getOptionOrElse "@secondary-color" 'yellow')
-  tertiaryColor=$(getOptionOrElse "@tertiary-color" 'red')
+  secondaryColor=$(getOptionOrElse "@secondary-color" 'red')
+
+  leftColors=$(getOptionOrElse "@left-colors", 'blue, green')
+  rightColors=$(getOptionOrElse "@right-colors", 'blue, green')
 }
 
 setDefaults() {
-  setOption "message-command-style" "fg=$lightColor,bg=$darkColor"
-  setOption "message-style" "fg=$lightColor,bg=$darkColor"
-  setOption "status-style" "fg=$lightColor,bg=$darkColor"
-  setOption 'pane-border-style' "fg=$darkColor,bg=$darkColor"
+  setOption "message-command-style" "fg=$fgColor,bg=$bgColor"
+  setOption "message-style" "fg=$fgColor,bg=$bgColor"
+  setOption "status-style" "fg=$fgColor,bg=$bgColor"
+  setOption 'pane-border-style' "fg=$bgColor,bg=$bgColor"
   setOption 'pane-active-border-style' "fg=$primaryColor"
-  setWindowOption "window-status-activity-style" "fg=$darkColor,bg=$secondaryColor"
-  setWindowOption "window-status-bell-style" "fg=$darkColor,bg=$secondaryColor"
-  setWindowOption "window-status-current-style" "fg=$darkColor,bg=$primaryColor"
-  setWindowOption "window-status-style" "fg=$lightColor,bg=$darkColor"
+  setWindowOption "window-status-activity-style" "fg=$bgColor,bg=$secondaryColor"
+  setWindowOption "window-status-bell-style" "fg=$bgColor,bg=$secondaryColor"
+  setWindowOption "window-status-current-style" "fg=$bgColor,bg=$primaryColor"
+  setWindowOption "window-status-style" "fg=$fgColor,bg=$bgColor"
 }
 
 setColor() {
   if [ $2 == 1 ]; then
-    appendOption "$1" "#[fg=$darkColor,bg=$primaryColor]"
+    appendOption "$1" "#[fg=$bgColor,bg=$primaryColor]"
   elif [ $2 == 2 ]; then
-    appendOption "$1" "#[fg=$darkColor,bg=$secondaryColor]"
+    appendOption "$1" "#[fg=$bgColor,bg=$secondaryColor]"
   else
-    appendOption "$1" "#[fg=$lightColor,bg=$darkColor]"
+    appendOption "$1" "#[fg=$fgColor,bg=$bgColor]"
   fi
 }
 
@@ -39,9 +41,9 @@ setColorBoundary() {
   if [ $2 == 1 ]; then
     appendOption "$1" "#[fg=$primaryColor,bg=$secondaryColor]"
   elif [ $2 == 2 ]; then
-    appendOption "$1" "#[fg=$secondaryColor,bg=$darkColor]"
+    appendOption "$1" "#[fg=$secondaryColor,bg=$bgColor]"
   else
-    appendOption "$1" "#[fg=$lightColor,bg=$darkColor]"
+    appendOption "$1" "#[fg=$fgColor,bg=$bgColor]"
   fi
 }
 
@@ -52,6 +54,6 @@ setRightColorBoundary() {
   elif [ $2 == 2 ]; then
     appendOption "$1" "#[fg=$primaryColor,bg=$secondaryColor]"
   else
-    appendOption "$1" "#[fg=$secondaryColor,bg=$darkColor]"
+    appendOption "$1" "#[fg=$secondaryColor,bg=$bgColor]"
   fi
 }

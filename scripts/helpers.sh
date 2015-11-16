@@ -46,3 +46,21 @@ splitStringLength() {
   IFS="${1}" read -r -a result <<< "$2"
   echo "${#result[@]}"
 }
+
+getBgColor() {
+  IFS="," read -r -a colors <<< "$1"
+  colorSet=${colors[$2]}
+  if [ -z $colorSet ]; then
+    colorSet="$darkColor"
+  fi
+  echo $(trimString "$colorSet")
+}
+
+getFgColor() {
+  IFS="," read -r -a colors <<< "$1"
+  if [ -z ${colors[$2]} ]; then
+    echo "$fgColor"
+  else
+    echo "$bgColor"
+  fi
+}
