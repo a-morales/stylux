@@ -12,7 +12,7 @@ setOption() {
 
 setWindowOption() {
   windowOption=$(getWindowOption $1)
-  if [ -z "$windowOption" ] || [ "$windowOption" == "default" ]; then
+  if [ -z "$windowOption" ] || [ "$windowOption" == "default" ] || [ "$3" == true ]; then
     tmux set-window-option -gq $1 $2
   fi
 }

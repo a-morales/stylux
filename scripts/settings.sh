@@ -9,9 +9,9 @@ initialize() {
   bgColor=$(getOptionOrElse "@bg-color" 'black')
   fgColor=$(getOptionOrElse "@fg-color" 'white')
   primaryColor=$(getOptionOrElse "@primary-color" 'green')
-  secondaryColor=$(getOptionOrElse "@secondary-color" 'red')
+  secondaryColor=$(getOptionOrElse "@secondary-color" 'blue')
 
-  colorList=$(getOptionOrElse "@left-colors", "$primaryColor, $secondaryColor")
+  colorList=$(getOptionOrElse "@color-list", "$primaryColor, $secondaryColor")
 }
 
 setDefaults() {
