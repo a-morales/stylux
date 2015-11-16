@@ -11,19 +11,19 @@ initialize() {
   primaryColor=$(getOptionOrElse "@primary-color" 'green')
   secondaryColor=$(getOptionOrElse "@secondary-color" 'red')
 
-  colorList=$(getOptionOrElse "@left-colors", 'blue, green')
+  colorList=$(getOptionOrElse "@left-colors", "$primaryColor, $secondaryColor")
 }
 
 setDefaults() {
-  setOption "message-command-style" "fg=$fgColor,bg=$bgColor"
-  setOption "message-style" "fg=$fgColor,bg=$bgColor"
-  setOption "status-style" "fg=$fgColor,bg=$bgColor"
-  setOption 'pane-border-style' "fg=$bgColor,bg=$bgColor"
-  setOption 'pane-active-border-style' "fg=$primaryColor"
-  setWindowOption "window-status-activity-style" "fg=$bgColor,bg=$secondaryColor"
-  setWindowOption "window-status-bell-style" "fg=$bgColor,bg=$secondaryColor"
-  setWindowOption "window-status-current-style" "fg=$bgColor,bg=$primaryColor"
-  setWindowOption "window-status-style" "fg=$fgColor,bg=$bgColor"
+  setOption "message-command-style" "fg=$fgColor,bg=$bgColor" true
+  setOption "message-style" "fg=$fgColor,bg=$bgColor" true
+  setOption "status-style" "fg=$fgColor,bg=$bgColor" true
+  setOption 'pane-border-style' "fg=$bgColor,bg=$bgColor" true
+  setOption 'pane-active-border-style' "fg=$primaryColor" true
+  setWindowOption "window-status-activity-style" "fg=$bgColor,bg=$secondaryColor" true
+  setWindowOption "window-status-bell-style" "fg=$bgColor,bg=$secondaryColor" true
+  setWindowOption "window-status-current-style" "fg=$bgColor,bg=$primaryColor" true
+  setWindowOption "window-status-style" "fg=$fgColor,bg=$bgColor" true
 }
 
 setColor() {
