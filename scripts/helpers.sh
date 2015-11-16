@@ -4,10 +4,6 @@ getOption() { echo "$(tmux show-option -gqv $1)"; }
 
 getWindowOption() { echo "$(tmux show-option -gwqv $1)"; }
 
-appendOption() {
-  tmux set-option -agq $1 $2
-}
-
 setOption() {
   if [ -z "$(getOption $1)" ] || [ "$(getOption $1)" == "default" ] || [ "$3" == true ]; then
     tmux set-option -gq $1 $2

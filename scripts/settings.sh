@@ -25,34 +25,3 @@ setDefaults() {
   setWindowOption "window-status-current-style" "fg=$bgColor,bg=$primaryColor" true
   setWindowOption "window-status-style" "fg=$fgColor,bg=$bgColor" true
 }
-
-setColor() {
-  if [ $2 == 1 ]; then
-    appendOption "$1" "#[fg=$bgColor,bg=$primaryColor]"
-  elif [ $2 == 2 ]; then
-    appendOption "$1" "#[fg=$bgColor,bg=$secondaryColor]"
-  else
-    appendOption "$1" "#[fg=$fgColor,bg=$bgColor]"
-  fi
-  echo "#[fg=$1,bg=$2]"
-}
-
-setColorBoundary() {
-  if [ $2 == 1 ]; then
-    appendOption "$1" "#[fg=$primaryColor,bg=$secondaryColor]"
-  elif [ $2 == 2 ]; then
-    appendOption "$1" "#[fg=$secondaryColor,bg=$bgColor]"
-  else
-    appendOption "$1" "#[fg=$fgColor,bg=$bgColor]"
-  fi
-}
-
-setRightColorBoundary() {
-  if [ $2 == 1 ]; then
-    appendOption "$1" "#[fg=$primaryColor,bg=$primaryColor]"
-  elif [ $2 == 2 ]; then
-    appendOption "$1" "#[fg=$primaryColor,bg=$secondaryColor]"
-  else
-    appendOption "$1" "#[fg=$secondaryColor,bg=$bgColor]"
-  fi
-}
