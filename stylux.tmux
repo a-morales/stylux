@@ -20,18 +20,50 @@ renderLeftStatus() {
       leftStatusString="${leftStatusString} $(trimString "$subStatus") "
       if [ $currentSubsection -lt $sectionLength ]; then
         leftStatusString="${leftStatusString}$leftSubseperator"
-        ((currentSubsection+=1))
+        currentSubsection=$((currentSubsection + 1))
       fi
     done
 
     if [ $currentSection -lt $numberOfSections ]; then
       leftStatusString="${leftStatusString}$(getColorBoundary $currentSection $((currentSection + 1)))$leftSeperator"
-      ((currentSection+=1))
     fi
+
+    currentSection=$((currentSection + 1))
   done
 
   if [ -n $leftStatusString ]; then
     setOption 'status-left' "$leftStatusString" true
+  fi
+}
+
+renderRightStatus() {
+  rightStatusString=""
+
+  rightStatus=$(splitStringOn '|' "$(getOption "@right-status")")
+  numberOfSections=$(splitStringLength '|' "$(getOption "@right-status")")
+  local currentSection=$((numberOfSections))
+  for status in $rightStatus; do
+    local sectionLength=$(splitStringLength ',' "$status")
+    local currentSubsection=$((sectionLength - 1))
+
+    if [ $currentSection -gt 0 ]; then
+      rightStatusString="${rightStatusString}$(getColorBoundary $((currentSection - 1)) $currentSection)$rightSeperator"
+    fi
+    rightStatusString="${rightStatusString}$(getColorCombination $((currentSection - 1)))"
+
+    for subStatus in $(splitStringOn ',' "$status"); do
+      rightStatusString="${rightStatusString} $(trimString $subStatus) "
+      if [ $currentSubsection -gt 1 ]; then
+        rightStatusString="${rightStatusString}$rightSubseperator"
+        currentSubsection=$((currentSubsection - 1))
+      fi
+    done
+
+    currentSection=$((currentSection - 1))
+  done
+
+  if [ -n $rightStatusString ]; then
+    setOption 'status-right' "$rightStatusString" true
   fi
 }
 
@@ -40,27 +72,8 @@ main () {
   # tmux set-option -g status-right ""
 
   renderLeftStatus
+  renderRightStatus
 
-
-  # rightStatus=$(splitStringOn '|' "$(getOption "@right-status")")
-  # currentSection=$(splitStringLength '|' "$(getOption "@right-status")")
-  # for status in $rightStatus; do
-  #   local currentSubsection=$(splitStringLength ',' "$status")
-  #   setColor 'status-right' $currentSection
-
-  #   for subStatus in $(splitStringOn ',' "$status"); do
-  #     appendOption 'status-right' " $(trimString "$subStatus") "
-  #     if [ $currentSubsection != 1 ]; then
-  #       appendOption 'status-right' "$rightSubseperator"
-  #       currentSubsection=$((currentSubsection - 1))
-  #     fi
-  #   done
-
-  #   if [ $currentSection > 1 ]; then
-  #     appendOption 'status-right' "$rightSeperator"
-  #     currentSection=$((currentSection - 1))
-  #   fi
-  # done
 }
 
 initialize
