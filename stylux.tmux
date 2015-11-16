@@ -69,7 +69,6 @@ renderRightStatus() {
 
 main () {
   IFS=$'\n'
-  # tmux set-option -g status-right ""
 
   renderLeftStatus
   renderRightStatus
