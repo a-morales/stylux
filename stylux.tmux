@@ -5,11 +5,7 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$CURRENT_DIR/scripts/helpers.sh"
 source "$CURRENT_DIR/scripts/settings.sh"
 
-main () {
-  IFS=$'\n'
-  # tmux set-option -g status-left ""
-  # tmux set-option -g status-right ""
-
+renderLeftStatus() {
   leftStatusString=""
 
   leftStatus=$(splitStringOn '|' "$(getOption "@left-status")")
@@ -34,10 +30,17 @@ main () {
     fi
   done
 
-  echo $leftStatusString
   if [ -n $leftStatusString ]; then
     setOption 'status-left' "$leftStatusString" true
   fi
+}
+
+main () {
+  IFS=$'\n'
+  # tmux set-option -g status-right ""
+
+  renderLeftStatus
+
 
   # rightStatus=$(splitStringOn '|' "$(getOption "@right-status")")
   # currentSection=$(splitStringLength '|' "$(getOption "@right-status")")
