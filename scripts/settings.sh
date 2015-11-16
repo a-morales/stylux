@@ -12,7 +12,7 @@ initialize() {
   secondaryColor=$(getOptionOrElse "@secondary-color" 'red')
 
   leftColors=$(getOptionOrElse "@left-colors", 'blue, green')
-  rightColors=$(getOptionOrElse "@right-colors", 'blue, green')
+  rightColors=$(getOptionOrElse "@right-colors", "$leftColors")
 }
 
 setDefaults() {
