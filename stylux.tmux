@@ -15,29 +15,44 @@ main () {
   local currentSection=1
   for status in $leftStatus; do
     local sectionLength=$(getSubsectionsLength "$status")
-    local currentSubSection=1
-    setColor $currentSection
+    local currentSubsection=1
+    setColor 'status-left' $currentSection
 
-    for subStatus in $(getSubSections "$status"); do
-      tmux set-option -agq status-left " $(trim "$subStatus") "
-      if [ $currentSubSection != $sectionLength ]; then
-        tmux set-option -agq status-left "$leftSubseperator"
-        currentSubSection=$((currentSubSection + 1))
+    for subStatus in $(getSubsections "$status"); do
+      appendOption 'status-left' " $(trim "$subStatus") "
+      if [ $currentSubsection != $sectionLength ]; then
+        appendOption 'status-left' "$leftSubseperator"
+        currentSubsection=$((currentSubsection + 1))
       fi
     done
 
     if [ $currentSection != $sectionLength ]; then
-      setColorBoundary $currentSection
-      tmux set-option -agq status-left "$leftSeperator"
+      setColorBoundary 'status-left' $currentSection
+      appendOption 'status-left' "$leftSeperator"
       currentSection=$((currentSection + 1))
     fi
 
   done
 
   rightStatus=$(getSections "$(getOption "@right-status")")
-  rightLength=$(getSectionsLength "$(getOption "@right-status")")
+  currentSection=$(getSectionsLength "$(getOption "@right-status")")
   for status in $rightStatus; do
-    tmux set-option -agq status-right " $rightSeperator$(trim "$status")"
+    local currentSubsection=$(getSubsectionsLength "$status")
+    setColor 'status-right' $currentSection
+
+    for subStatus in $(getSubsections "$status"); do
+      appendOption 'status-right' " $(trim "$subStatus") "
+      if [ $currentSubsection != 1 ]; then
+        appendOption 'status-right' "$rightSubseperator"
+        currentSubsection=$((currentSubsection - 1))
+      fi
+    done
+
+    echo $currentSection $status
+    if [ $currentSection > 1 ]; then
+      appendOption 'status-right' "$rightSeperator"
+      currentSection=$((currentSection - 1))
+    fi
   done
 }
 

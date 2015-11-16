@@ -42,7 +42,7 @@ getSections() {
   for i in "${result[@]}"; do echo "$i"; done
 }
 
-getSubSections() {
+getSubsections() {
   IFS="," read -r -a result <<< "$1"
   for i in "${result[@]}"; do echo "$i"; done
 }
