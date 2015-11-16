@@ -11,9 +11,27 @@ main () {
   tmux set-option -g status-right ""
 
   leftStatus=$(getSections "$(getOption "@left-status")")
-  leftLength=$(getSectionsLength "$(getOption "@left-status")")
+  sectionLength=$(getSectionsLength "$(getOption "@left-status")")
+  local currentSection=1
   for status in $leftStatus; do
-    tmux set-option -agq status-left " $(trim "$status")$leftSeperator"
+    local sectionLength=$(getSubsectionsLength "$status")
+    local currentSubSection=1
+    setColor $currentSection
+
+    for subStatus in $(getSubSections "$status"); do
+      tmux set-option -agq status-left " $(trim "$subStatus") "
+      if [ $currentSubSection != $sectionLength ]; then
+        tmux set-option -agq status-left "$leftSubseperator"
+        currentSubSection=$((currentSubSection + 1))
+      fi
+    done
+
+    if [ $currentSection != $sectionLength ]; then
+      setColorBoundary $currentSection
+      tmux set-option -agq status-left "$leftSeperator"
+      currentSection=$((currentSection + 1))
+    fi
+
   done
 
   rightStatus=$(getSections "$(getOption "@right-status")")
