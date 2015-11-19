@@ -54,7 +54,7 @@ renderRightStatus() {
 
     for subStatus in $(splitStringOn ',' "$status"); do
       rightStatusString="${rightStatusString} $(trimString $subStatus) "
-      if [ $currentSubsection -gt 1 ]; then
+      if [ $currentSubsection -gt 0 ]; then
         rightStatusString="${rightStatusString}$rightSubseperator"
         currentSubsection=$((currentSubsection - 1))
       fi
