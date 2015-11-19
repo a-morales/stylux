@@ -14,7 +14,7 @@ renderLeftStatus() {
   for status in $leftStatus; do
     local sectionLength=$(splitStringLength ',' "$status")
     local currentSubsection=1
-    leftStatusString="${leftStatusString}$(getColorCombination $currentSection)"
+    leftStatusString="${leftStatusString}$(getLeftColorCombination $currentSection)"
 
     for subStatus in $(splitStringOn ',' "$status"); do
       leftStatusString="${leftStatusString} $(trimString "$subStatus") "
@@ -25,7 +25,7 @@ renderLeftStatus() {
     done
 
     if [ $currentSection -lt $numberOfSections ]; then
-      leftStatusString="${leftStatusString}$(getColorBoundary $currentSection $((currentSection + 1)))$leftSeperator"
+      leftStatusString="${leftStatusString}$(getLeftColorBoundary $currentSection)$leftSeperator"
     fi
 
     currentSection=$((currentSection + 1))
@@ -42,14 +42,15 @@ renderRightStatus() {
   rightStatus=$(splitStringOn '|' "$(getOption "@right-status")")
   numberOfSections=$(splitStringLength '|' "$(getOption "@right-status")")
   local currentSection=$((numberOfSections))
+
   for status in $rightStatus; do
     local sectionLength=$(splitStringLength ',' "$status")
     local currentSubsection=$((sectionLength - 1))
 
     if [ $currentSection -gt 0 ]; then
-      rightStatusString="${rightStatusString}$(getColorBoundary $((currentSection - 1)) $currentSection)$rightSeperator"
+      rightStatusString="${rightStatusString}$(getRightColorBoundary $currentSection)$rightSeperator"
     fi
-    rightStatusString="${rightStatusString}$(getColorCombination $((currentSection - 1)))"
+    rightStatusString="${rightStatusString}$(getRightColorCombination $((currentSection - 1)))"
 
     for subStatus in $(splitStringOn ',' "$status"); do
       rightStatusString="${rightStatusString} $(trimString $subStatus) "

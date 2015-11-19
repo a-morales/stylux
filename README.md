@@ -32,7 +32,10 @@ A simple and lightweight tool for styling tmux.
     set -g @secondary-color "blue"
 
     # order of colors to display in status line
-    set -g @color-list "green, blue"
+    set -g @left-bg-color-list "green, blue"
+    set -g @left-fg-color-list "black, black"
+    set -g @right-bg-color-list "green, blue"
+    set -g @right-fg-color-list "black, black"
 
     # Strings for what to display in left and right status-bar
     # If not set, corresponding status-bar will not be touched

@@ -11,7 +11,10 @@ initialize() {
   primaryColor=$(getOptionOrElse '@primary-color' 'green')
   secondaryColor=$(getOptionOrElse '@secondary-color' 'blue')
 
-  colorList=$(getOptionOrElse '@color-list', "$primaryColor, $secondaryColor")
+  leftBgList=$(getOptionOrElse '@left-bg-color-list' "$primaryColor, $secondaryColor")
+  leftFgList=$(getOptionOrElse '@left-fg-color-list' "$bgColor, $bgColor")
+  rightBgList=$(getOptionOrElse '@right-bg-color-list' "$primaryColor, $secondaryColor")
+  rightFgList=$(getOptionOrElse '@right-fg-color-list' "$bgColor, $bgColor")
 }
 
 setDefaults() {

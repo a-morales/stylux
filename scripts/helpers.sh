@@ -43,28 +43,37 @@ splitStringLength() {
   echo "${#result[@]}"
 }
 
-getColorCombination() {
-  echo "#[fg=$(getFgColor $1),bg=$(getBgColor $1)]"
+
+getLeftColorCombination() {
+  echo "#[fg=$(getFgColor $1 $leftFgList),bg=$(getBgColor $1 $leftBgList)]"
 }
 
-getColorBoundary() {
-  echo "#[fg=$(getBgColor $1),bg=$(getBgColor $2)]"
+getRightColorCombination() {
+  echo "#[fg=$(getFgColor $1 $rightFgList),bg=$(getBgColor $1 $rightBgList)]"
+}
+
+getLeftColorBoundary() {
+  echo "#[fg=$(getBgColor $1 $leftBgList),bg=$(getBgColor $(($1 + 1)) $leftBgList)]"
+}
+
+getRightColorBoundary() {
+  echo "#[fg=$(getBgColor $(($1 -1)) $rightBgList),bg=$(getBgColor $1 $rightBgList)]"
 }
 
 getBgColor() {
-  IFS="," read -r -a colors <<< "$colorList"
-  colorSet=${colors[$1]}
-  if [ -z $colorSet ]; then
-    colorSet="$bgColor"
-  fi
-  echo $(trimString "$colorSet")
+  echo $(getColor "$1" "$2" "$bgColor")
 }
 
 getFgColor() {
-  IFS="," read -r -a colors <<< "$colorList"
-  if [ -z ${colors[$1]} ]; then
-    echo "$fgColor"
-  else
-    echo "$bgColor"
-  fi
+  echo $(getColor "$1" "$2" "$fgColor")
 }
+
+getColor() {
+  IFS="," read -r -a colors <<< "$2"
+  color=${colors[$1]}
+  if [ -z $color ]; then
+    color=$3
+  fi
+  echo $(trimString "$color")
+}
+
