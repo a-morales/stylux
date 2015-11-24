@@ -43,29 +43,37 @@ splitStringLength() {
   echo "${#result[@]}"
 }
 
-
-getLeftColorCombination() {
-  echo "#[fg=$(getFgColor $1 $leftFgList),bg=$(getBgColor $1 $leftBgList)]"
+getColorCombination() {
+  fgList=$(eval "echo \$$2FgList")
+  bgList=$(eval "echo \$$2BgList")
+  if [ $2 == 'left' ]; then
+    index=$1
+  else
+    index=$(($1 - 1))
+  fi
+  echo "#[fg=$(getColor $index "$fgList" "$fgColor"),bg=$(getColor $index "$bgLIst" $bgColor)]"
 }
 
-getRightColorCombination() {
-  echo "#[fg=$(getFgColor $1 $rightFgList),bg=$(getBgColor $1 $rightBgList)]"
-}
+getSeperator() {
+  bgList=$(eval "echo \$$2BgList")
+  seperator=$(eval "echo \$$2Seperator")
+  subSeperator=$(eval "echo \$$2Subseperator")
+  if [ $2 == 'left' ]; then
+    leftBoundary=$1
+    rightBoundary="$(($1 + 1))"
+  else
+    leftBoundary=$(($1 - 1))
+    rightBoundary=$1
+  fi
+  result="#[fg=$(getColor $leftBoundary "$bgList" "$bgColor"),bg=$(getColor $rightBoundary "$bgList" "$bgColor")]"
 
-getLeftColorBoundary() {
-  echo "#[fg=$(getBgColor $1 $leftBgList),bg=$(getBgColor $(($1 + 1)) $leftBgList)]"
-}
+  if [ $result == '#[fg=black,bg=black]' ]; then
+    result="$(getColorCombination $1 $2)$subSeperator"
+  else
+    result="${result}$seperator"
+  fi
 
-getRightColorBoundary() {
-  echo "#[fg=$(getBgColor $(($1 -1)) $rightBgList),bg=$(getBgColor $1 $rightBgList)]"
-}
-
-getBgColor() {
-  echo $(getColor "$1" "$2" "$bgColor")
-}
-
-getFgColor() {
-  echo $(getColor "$1" "$2" "$fgColor")
+  echo $result
 }
 
 getColor() {
@@ -76,4 +84,3 @@ getColor() {
   fi
   echo $(trimString "$color")
 }
-

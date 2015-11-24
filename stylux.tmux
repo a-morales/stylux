@@ -14,7 +14,7 @@ renderLeftStatus() {
   for status in $leftStatus; do
     local sectionLength=$(splitStringLength ',' "$status")
     local currentSubsection=1
-    leftStatusString="${leftStatusString}$(getLeftColorCombination $currentSection)"
+    leftStatusString="${leftStatusString}$(getColorCombination $currentSection 'left')"
 
     for subStatus in $(splitStringOn ',' "$status"); do
       leftStatusString="${leftStatusString} $(trimString "$subStatus") "
@@ -25,15 +25,13 @@ renderLeftStatus() {
     done
 
     if [ $currentSection -lt $numberOfSections ]; then
-      leftStatusString="${leftStatusString}$(getLeftColorBoundary $currentSection)$leftSeperator"
+      leftStatusString="${leftStatusString}$(getSeperator $currentSection 'left')"
     fi
 
     currentSection=$((currentSection + 1))
   done
 
-  if [ -n $leftStatusString ]; then
-    setOption 'status-left' "$leftStatusString" true
-  fi
+  echo "$leftStatusString" true
 }
 
 renderRightStatus() {
@@ -45,34 +43,35 @@ renderRightStatus() {
 
   for status in $rightStatus; do
     local sectionLength=$(splitStringLength ',' "$status")
-    local currentSubsection=$((sectionLength - 1))
+    local currentSubsection=($sectionLength)
 
+    # echo $currentSection
     if [ $currentSection -gt 0 ]; then
-      rightStatusString="${rightStatusString}$(getRightColorBoundary $currentSection)$rightSeperator"
+      rightStatusString="${rightStatusString}$(getSeperator $currentSection 'right')"
     fi
-    rightStatusString="${rightStatusString}$(getRightColorCombination $((currentSection - 1)))"
+    rightStatusString="${rightStatusString}$(getColorCombination $currentSection 'right')"
 
     for subStatus in $(splitStringOn ',' "$status"); do
       rightStatusString="${rightStatusString} $(trimString $subStatus) "
-      if [ $currentSubsection -gt 0 ]; then
+      # echo $currentSubsection
+      if [ $currentSubsection -gt 1 ]; then
         rightStatusString="${rightStatusString}$rightSubseperator"
         currentSubsection=$((currentSubsection - 1))
       fi
     done
 
-    currentSection=$((currentSection - 1))
+    # echo $rightStatusString
+    currentSection=$((currentSection + -1))
   done
 
-  if [ -n $rightStatusString ]; then
-    setOption 'status-right' "$rightStatusString" true
-  fi
+  echo "$rightStatusString"
 }
 
 main () {
   IFS=$'\n'
 
-  renderLeftStatus
-  renderRightStatus
+  setOption 'status-left' $(renderLeftStatus) true
+  setOption 'status-right' $(renderRightStatus) true
 
 }
 
