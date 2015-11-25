@@ -31,7 +31,7 @@ renderLeftStatus() {
     currentSection=$((currentSection + 1))
   done
 
-  echo "$leftStatusString" true
+  echo "$leftStatusString"
 }
 
 renderRightStatus() {
