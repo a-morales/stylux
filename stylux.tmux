@@ -8,8 +8,8 @@ source "$CURRENT_DIR/scripts/settings.sh"
 renderLeftStatus() {
   leftStatusString=""
 
-  leftStatus=$(splitStringOn '|' "$(getOption "@left-status")")
-  numberOfSections=$(splitStringLength '|' "$(getOption "@left-status")")
+  leftStatus=$(splitStringOn '|' "$(getOption "status-left")")
+  numberOfSections=$(splitStringLength '|' "$(getOption "status-left")")
   local currentSection=0
   for status in $leftStatus; do
     local sectionLength=$(splitStringLength ',' "$status")
@@ -37,8 +37,8 @@ renderLeftStatus() {
 renderRightStatus() {
   rightStatusString=""
 
-  rightStatus=$(splitStringOn '|' "$(getOption "@right-status")")
-  numberOfSections=$(splitStringLength '|' "$(getOption "@right-status")")
+  rightStatus=$(splitStringOn '|' "$(getOption "status-right")")
+  numberOfSections=$(splitStringLength '|' "$(getOption "status-right")")
   local currentSection=$((numberOfSections))
 
   for status in $rightStatus; do

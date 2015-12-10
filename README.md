@@ -36,19 +36,13 @@ A simple and lightweight tool for styling tmux.
     set -g @left-fg-color-list "black, black"
     set -g @right-bg-color-list "green, blue"
     set -g @right-fg-color-list "black, black"
-
-    # Strings for what to display in left and right status-bar
-    # If not set, corresponding status-bar will not be touched
-    set -g @left-status ""
-    set -g @right-status ""
   ```
 
-- To configure the status bars either the `@status-left` or `@status-right` variables will need to be set
 - Use `|` to specify new sections in the status-bar and `,` to specify subsections:
 - basic usage:
   ```
   ## \ at end of line in tmux.conf denotes continue command on next line
-  set -g @left-status "\
+  set -g status-left "\
     #S.#I.#P |\
     foo , bar, baz |\
     #h \
@@ -59,7 +53,7 @@ A simple and lightweight tool for styling tmux.
 
 - using tpm plugins (like [tmux-battery](https://github.com/tmux-plugins/tmux-battery))
   ```
-  set -g @right-status "\
+  set -g status-right "\
     #{battery_icon} #{battery_percentage} |\
     %d %b %Y - %H:%M %p \
   "
