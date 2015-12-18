@@ -85,6 +85,14 @@ A simple and lightweight tool for styling tmux.
   $ tmux source-file ~/.tmux.conf
   ```
 
+### Testing
+
+The code is tested using the [bats](https://github.com/sstephenson/bats) testing framework.
+To run the test suite, just run the following command once `bats` in installed:
+  ```bash
+  $ bats test
+  ```
+
 ### Why another powerline clone?
   - [powerline](https://github.com/powerline/powerline) is to complicated and bloated for my needs
     - I want something lightweight
