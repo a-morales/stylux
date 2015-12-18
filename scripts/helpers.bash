@@ -35,7 +35,7 @@ trimString() {
 
 splitStringOn() {
   IFS="${1}" read -r -a result <<< "$2"
-  for i in "${result[@]}"; do echo "$i"; done
+  for i in "${result[@]}"; do echo "$(trimString $i)"; done
 }
 
 splitStringLength() {
@@ -81,6 +81,9 @@ getColor() {
   color=${colors[$1]}
   if [ -z $color ]; then
     color=$3
+  fi
+  if [ -z $color ]; then
+    exit 1
   fi
   echo $(trimString "$color")
 }
