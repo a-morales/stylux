@@ -72,7 +72,6 @@ main () {
 
   setOption 'status-left' $(renderLeftStatus) true
   setOption 'status-right' $(renderRightStatus) true
-
 }
 
 initialize

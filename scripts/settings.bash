@@ -18,8 +18,8 @@ setSeperators() {
     leftSubseperator=$(getOptionOrElse '@left-subseperator' '')
     rightSubseperator=$(getOptionOrElse '@right-subseperator' '')
   elif [ $1 == 'dithered' ]; then
-    leftSeperator=$(getOptionOrElse '@left-seperator' '░▓')
-    rightSeperator=$(getOptionOrElse '@right-seperator' '▓░')
+    leftSeperator=$(getOptionOrElse '@left-seperator' '▓░')
+    rightSeperator=$(getOptionOrElse '@right-seperator' '░▓')
     leftSubseperator=$(getOptionOrElse '@left-subseperator' '░')
     rightSubseperator=$(getOptionOrElse '@right-subseperator' '░')
   else
@@ -37,10 +37,10 @@ setColors() {
   primaryColor=$(getOptionOrElse '@primary-color' 'green')
   secondaryColor=$(getOptionOrElse '@secondary-color' 'blue')
 
-  leftBgList=$(getOptionOrElse '@left-bg-color-list' "$primaryColor, $secondaryColor")
-  leftFgList=$(getOptionOrElse '@left-fg-color-list' "$bgColor, $bgColor")
-  rightBgList=$(getOptionOrElse '@right-bg-color-list' "$primaryColor, $secondaryColor")
-  rightFgList=$(getOptionOrElse '@right-fg-color-list' "$bgColor, $bgColor")
+  leftBgList=$(getOptionOrElse '@left-bg-list' "$primaryColor, $secondaryColor")
+  leftFgList=$(getOptionOrElse '@left-fg-list' "$bgColor, $bgColor")
+  rightBgList=$(getOptionOrElse '@right-bg-list' "$primaryColor, $secondaryColor")
+  rightFgList=$(getOptionOrElse '@right-fg-list' "$bgColor, $bgColor")
 }
 
 setDefaults() {

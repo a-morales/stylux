@@ -51,7 +51,7 @@ getColorCombination() {
   else
     index=$(($1 - 1))
   fi
-  echo "#[fg=$(getColor $index "$fgList" "$fgColor"),bg=$(getColor $index "$bgLIst" $bgColor)]"
+  echo "#[fg=$(getColor $index "$fgList" "$fgColor"),bg=$(getColor $index "$bgList" $bgColor)]"
 }
 
 getSeperator() {
