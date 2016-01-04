@@ -1,11 +1,37 @@
 #!/usr/bin/env bash
 
-initialize() {
-  leftSeperator=$(getOptionOrElse '@left-seperator' '')
-  rightSeperator=$(getOptionOrElse '@right-seperator' '')
-  leftSubseperator=$(getOptionOrElse '@left-subseperator' '')
-  rightSubseperator=$(getOptionOrElse '@right-subseperator' '')
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$CURRENT_DIR/helpers.bash"
 
+initialize() {
+  setSeperators "$(getOptionOrElse @seperators 'powerline')"
+
+  setColors
+  setDefaults
+}
+
+setSeperators() {
+  seperatorType="$1"
+  if [ $1 == 'powerline' ]; then
+    leftSeperator=$(getOptionOrElse '@left-seperator' '')
+    rightSeperator=$(getOptionOrElse '@right-seperator' '')
+    leftSubseperator=$(getOptionOrElse '@left-subseperator' '')
+    rightSubseperator=$(getOptionOrElse '@right-subseperator' '')
+  elif [ $1 == 'dithered' ]; then
+    leftSeperator=$(getOptionOrElse '@left-seperator' '░▓')
+    rightSeperator=$(getOptionOrElse '@right-seperator' '▓░')
+    leftSubseperator=$(getOptionOrElse '@left-subseperator' '░')
+    rightSubseperator=$(getOptionOrElse '@right-subseperator' '░')
+  else
+    seperatorType='block'
+    leftSeperator=$(getOptionOrElse '@left-seperator' '')
+    rightSeperator=$(getOptionOrElse '@right-seperator' '')
+    leftSubseperator=$(getOptionOrElse '@left-subseperator' '|')
+    rightSubseperator=$(getOptionOrElse '@right-subseperator' '|')
+  fi
+}
+
+setColors() {
   bgColor=$(getOptionOrElse '@bg-color' 'black')
   fgColor=$(getOptionOrElse '@fg-color' 'white')
   primaryColor=$(getOptionOrElse '@primary-color' 'green')

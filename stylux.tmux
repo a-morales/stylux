@@ -76,5 +76,4 @@ main () {
 }
 
 initialize
-setDefaults
 main

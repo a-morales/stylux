@@ -7,56 +7,47 @@ A simple and lightweight tool for styling tmux.
   - Status bar configuration is within `.tmux.conf`
   - Easy to configure
   - Support powerline fonts
-  - Works with other `TPM` plugins for the status bar
+  - Works with other `TPM` plugins
 
 ### Usage
 
-- Configuring Stylux is done by setting user variables in `.tmux.conf`. the list of variables and their defaults are:
+- Configuring Stylux is done by setting variables in `.tmux.conf`. the list of variables and their defaults are:
   ```
-    # use for separations of sections in status bars
-    set -g @left-seperator "⮀"
-    set -g @right-seperator "⮂"
-
-    # use for subsections in status bar sections
-    set -g @left-subseperator "⮁"
-    set -g @right-subseperator "⮃"
+    # seperators to use for the status bar
+    # powerline will use the powerline seperators
+    @seperators "powerline"
+    @seperators "block"
+    @seperators "dithered"
 
     # main background and foreground colors
-    set -g @bg-color "black"
-    set -g @fg-color "white"
+    @bg-color "black"
+    @fg-color "white"
 
     # colors used for styling of status bar, window statuses, and pane divisions
     # primary color is used for current active window and highlight active pane
     # secondary color is used for activities in other windows
-    set -g @primary-color "green"
-    set -g @secondary-color "blue"
+    @primary-color "green"
+    @secondary-color "blue"
 
-    # order of colors to display in status line
-    set -g @left-bg-color-list "green, blue"
-    set -g @left-fg-color-list "black, black"
-    set -g @right-bg-color-list "green, blue"
-    set -g @right-fg-color-list "black, black"
+    # order of colors to display in status line, ordered by outermost to inmost
+    @left-bg-list "green, blue"
+    @left-fg-list "black, black"
+    @right-bg-list "green, blue"
+    @right-fg-list "black, black"
   ```
 
 - Use `|` to specify new sections in the status-bar and `,` to specify subsections:
 - basic usage:
   ```
   ## \ at end of line in tmux.conf denotes continue command on next line
-  set -g status-left "\
-    #S.#I.#P |\
-    foo , bar, baz |\
-    #h \
-  "
+  set -g status-left "#S.#I.#P | foo , bar, baz | #h"
   ```
 
   will result in ![left status](./images/left-status.png)
 
 - using tpm plugins (like [tmux-battery](https://github.com/tmux-plugins/tmux-battery))
   ```
-  set -g status-right "\
-    #{battery_icon} #{battery_percentage} |\
-    %d %b %Y - %H:%M %p \
-  "
+  set -g status-right "#{battery_icon} #{battery_percentage} | %d %b %Y - %H:%M %p"
   ```
 
   will result in ![right status](./images/right-status.png)
