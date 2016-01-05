@@ -31,7 +31,7 @@ renderLeftStatus() {
     currentSection=$((currentSection + 1))
   done
 
-  echo "$leftStatusString"
+  echo "$leftStatusString "
 }
 
 renderRightStatus() {
@@ -67,11 +67,25 @@ renderRightStatus() {
   echo "$rightStatusString"
 }
 
+renderWindowStatus() {
+  if [ $1 == 'left' ]; then
+    setWindowOption 'window-status-format' "$leftSeprator#I:#W#F" true
+    setWindowOption 'window-status-current-format' "$leftSeperator#I:#W#F#[reverse]$leftSeperator" true
+  elif [ $1 == 'right' ]; then
+    setWindowOption 'window-status-format' "#I:#W#F" true
+    setWindowOption 'window-status-current-format' "#[reverse]$rightSeperator#[noreverse]#I:#W#F$rightSeperator" true
+  else
+    setWindowOption 'window-status-format' "#I:#W#F" true
+    setWindowOption 'window-status-current-format' "$leftSeperator#I:#W#F$rightSeperator" true
+  fi
+}
+
 main () {
   IFS=$'\n'
 
   setOption 'status-left' $(renderLeftStatus) true
   setOption 'status-right' $(renderRightStatus) true
+  renderWindowStatus $(getOptionOrElse status-justify 'centre')
 }
 
 initialize
