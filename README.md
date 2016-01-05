@@ -13,11 +13,11 @@ A simple and lightweight tool for styling tmux.
 
 - Configuring Stylux is done by setting variables in `.tmux.conf`. the list of variables and their defaults are:
   ```
-    # seperators to use for the status bar
-    # powerline will use the powerline seperators
-    @seperators "powerline"
-    @seperators "block"
-    @seperators "dithered"
+    # seperators to use for the status bar and window statuses
+    # valid options are "dithered", "powerline" or "blocks"
+    # each seperator can be overridden by setting
+    # @left-seperator, @left-subseperator, @right-seperator, @right-subseperator
+    @seperators "blocks"
 
     # main background and foreground colors
     @bg-color "black"
@@ -40,10 +40,25 @@ A simple and lightweight tool for styling tmux.
 - basic usage:
   ```
   ## \ at end of line in tmux.conf denotes continue command on next line
-  set -g status-left "#S.#I.#P | foo , bar, baz | #h"
+  set -g status-left "#S:#I.#P | %e %b %Y , %I:%M %p | foo, bar, baz"
   ```
 
-  will result in ![left status](./images/left-status.png)
+  will result in ![simple status](./images/simple-status.png)
+
+  Changing the seperators can be done by adding:
+  ```
+  set -g @seperators "powerline"
+  ```
+
+  will result in ![changing seperators](./images/changing-seperators.png)
+
+  Some more customizations:
+  ```
+    set @left-bg-list "black"
+    set @left-fg-list "red, white, blue"
+  ```
+
+  will result in ![specifying colors](./images/specifying-colors.png)
 
 - using tpm plugins (like [tmux-battery](https://github.com/tmux-plugins/tmux-battery))
   ```

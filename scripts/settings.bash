@@ -4,7 +4,7 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$CURRENT_DIR/helpers.bash"
 
 initialize() {
-  setSeperators "$(getOptionOrElse @seperators 'powerline')"
+  setSeperators "$(getOptionOrElse '@seperators' 'powerline')"
 
   setColors
   setDefaults
